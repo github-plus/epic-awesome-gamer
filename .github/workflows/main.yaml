@@ -1,0 +1,24 @@
+name: FingersOfTheGoldenOrder🦉
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "29 21 * * 5" # 修改你的定时配置
+    
+jobs:
+  setup:
+    env:
+      EPIC_EMAIL: ${{ secrets.EPIC_EMAIL }}
+      EPIC_PASSWORD: ${{ secrets.EPIC_PASSWORD }}
+      PUSHER_TELEGRAM: ${{ secrets.PUSHER_TELEGRAM }}
+      PLAYER: ${{ secrets.EPIC_PLAYER }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scaffold Claim
+        run: |
+          docker run --rm --pull always --init \
+          -e EPIC_EMAIL \
+          -e EPIC_PASSWORD \
+          -e PUSHER_TELEGRAM \
+          -e PLAYER \
+          ech0sec/awesome-epic:daddy xvfb-run python3 main.py claim 
